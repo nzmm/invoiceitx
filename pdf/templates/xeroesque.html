@@ -1,0 +1,206 @@
+<html>
+    <head>
+        <style>
+            body {
+                margin: 4%;
+                font-family: {{ fonts }};
+                overflow: hidden;
+            }
+            table {
+                width: 100%;
+            }
+            td {
+                vertical-align: top;
+            }
+            #header {
+                height: 100px;
+                width: 100%;
+                margin-bottom: 3em;
+            }
+            .abbr {
+                display: inline-block;
+                text-align: center;
+                width: 1.2em;
+            }
+            #header > img {
+                float: right;
+                width: 24%;
+            }
+            #invoice-details {
+            }
+            #business-details {
+                line-height: 1.5;
+            }
+            #details {
+                margin-bottom: 5em;
+            }
+            #items {
+                width:100%;
+                border-collapse: collapse;
+            }
+            #items > tbody > tr th {
+                text-align: left;
+                border-bottom: 1px solid #000;
+            }
+            #items td {
+                text-align: left;
+                padding: 5px;
+            }
+            #items td.underline {
+                border-bottom: 1px solid #ABABAB;
+            }
+            #items td.underline-strong {
+                border-bottom: 1px solid #000;
+            }
+            #items td.total {
+                padding: 10px 0;
+            }
+            #items td.text-right, #items th.text-right {
+                text-align: right;
+            }
+            #items td.grand.total {
+                font-weight: bold;
+            }
+            #items td.payments {
+                color: #808080;
+            }
+            #comments {
+                margin-top: 5em;
+                padding: 10px 0;
+            }
+            .upperline {
+                border-top: 1px solid #ABABAB;
+            }
+            .text-right {
+                text-align: right;
+            }
+            .text-center {
+                text-align: center;
+            }
+            .customer {
+                margin-top: 15px;
+                margin-left: 30px;
+            }
+            .payment {
+                color: #1E90FF !important;
+            }
+            #footer {
+                position: fixed;
+                bottom: 0;
+                width: 92%;
+                margin-top: 15px;
+            }
+            #tid {
+                font-family: monospace;
+                font-size: small;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="header">
+            <img src="{{ brand_image }}">
+        </div>
+        <div id="cotnainer">
+            <table id="details">
+                <tr>
+                    <td style="width:52%;">
+                        <h1>TAX INVOICE</h1>
+                        <p class="customer">{{ customer_name }}</p>
+                        <p class="customer">{{ customer_email }}</p>
+                    </td>
+                    <td id="invoice-details" style="width:26%;">
+                        <p>
+                            <strong>Invoice Date</strong>
+                            <br>
+                            {{ sale_date }}
+                        </p>
+                        <p>
+                            <strong>Invoice Number</strong>
+                            <br>
+                            {{ invoice_number }}
+                        </p>
+                        <p>
+                            <strong>GST Number</strong>
+                            <br>
+                            {{ gst_number }}
+                        </p>
+                    </td>
+                    <td id="business-details" style="width:24%;">
+                        <p>
+                            {% if legal_entity %}<sup>{{ legal_entity }} t/a</sup>
+                            <br>{% endif %}
+                            <big><strong>{{ trading_name }}</strong></big>
+                        </p>
+                        <p>
+                            {{ postal_address|nl2br }}
+                        </p>
+                    </td>
+                </tr>
+            </table>
+            <table id="items">
+                <tr>
+                    <th style="width:47%;">Description</th>
+                    <th class="text-right">Quantity</th>
+                    <th class="text-right">Unit Price</th>
+                    <th class="text-right">Amount NZD</th>
+                </tr>
+                {% for it in purchase_items %}
+                <tr>
+                    <td class="underline">
+                        {{ it.name }}
+                        {% if it.line_note %}
+                        <br>
+                        <p><em>{{ it.line_note }}</em></p>
+                        {% endif %}
+                    </td>
+                    <td class="underline text-right">{{ it.quantity }}</td>
+                    <td class="underline text-right">{{ '%0.2f'|format(it.price) }}</td>
+                    <td class="underline text-right">{{ '%0.2f'|format(it.price_total) }}</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="2"></td>
+                    <td class="total text-right">Subtotal</td>
+                    <td class="total text-right">{{ '%0.2f'|format(subtotal) }}</td>
+                </tr>
+                <tr>
+                    <td class="total" colspan="2"></td>
+                    <td class="total underline text-right">TOTAL GST 15%</td>
+                    <td class="total underline text-right">{{ '%0.2f'|format(tax_total) }}</td>
+                </tr>
+                <tr>
+                    <td colspan="2"></td>
+                    <td class="grand total underline-strong text-right">TOTAL NZD</td>
+                    <td class="grand total underline-strong text-right">{{ '%0.2f'|format(total) }}</td>
+                </tr>
+                <tr>
+                    <td colspan="2"></td>
+                    <td class="payments text-right" colspan="2"><small>Payments</small></td>
+                </tr>
+                {% for payment in payments %}
+                <tr>
+                    <td colspan="2"></td>
+                    <td class="total payment underline text-right">{{ payment.name }}</td>
+                    <td class="total payment underline text-right">({{ '%0.2f'|format(payment.amount) }})</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="2"></td>
+                    <td class="grand total underline-strong text-right">Amount Due</td>
+                    <td class="grand total underline-strong text-right">{{ '%0.2f'|format(amount_due) }}</td>
+                </tr>
+            </table>
+            {% if sale_comment %}
+            <p id="comments">
+                <small style="color: #808080;">Comments:</small><br>
+                <em>{{ sale_comment|nl2br }}</em>
+            </p>
+            {% endif %}
+        </div>
+        <div id="footer" class="upperline text-center">
+            <p id="message">{{ footer_message }}</p>
+            <p id="footer-msg">{{ email }}{% if phone %} &middot; {% endif %}{{ phone }}{% if mobile %} &middot; {% endif %}{{ mobile }}</p>
+            <p id="tid">{{ transaction_id }} :: {{ sale_datetime }}</p>
+        </div>
+    </body>
+<html>
