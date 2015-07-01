@@ -1,11 +1,13 @@
 InvoiceIt
 =========
 
-Send fancy receipts for vend sales.  Tested to work on both Windows and Ubuntu Linux
+Send fancy receipts for vend sales.  Tested to work on both Windows and Ubuntu Linux.  You need a Vend account for this software to be of any use.
 
 
 Installation
 ============
+
+Required software:
 
 * Python 3.4
 * PyQt5.4
@@ -16,7 +18,8 @@ Installation
 * SQLAlchemy
 * Jinja2
 
-On Windows you'll need to install Python, PyQt and wkhtmltopdf from their respective websites.
+
+On Windows you'll need to install Python3.4, PyQt5 and wkhtmltopdf from their respective websites.
 
 Using `pip` you can then install the remaining python libs:
 
