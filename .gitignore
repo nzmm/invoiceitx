@@ -99,3 +99,7 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# invoiceit specific
+cache/
+.idea/
