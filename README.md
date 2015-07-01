@@ -19,7 +19,7 @@ Required software:
 * Jinja2
 
 
-On Windows you'll need to install Python3.4, PyQt5 and wkhtmltopdf from their respective websites.
+On Windows you'll need to download Python3.4, PyQt5 and wkhtmltopdf from their respective websites and then run their installers.
 
 Using `pip` you can then install the remaining python libs:
 

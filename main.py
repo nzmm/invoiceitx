@@ -18,7 +18,7 @@ def aboutToQuit(*args):
 
 
 if __name__ == '__main__':
-    # See link for why we avoid a 'main' function here
+    # Reminder to self, see link for why we avoid a 'main' function here
     # http://pyqt.sourceforge.net/Docs/PyQt5/pyqt4_differences.html#object-destruction-on-exit
 
     app = QApplication(sys.argv)
