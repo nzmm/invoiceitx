@@ -160,6 +160,11 @@ Item {
             }
 
             TableViewColumn {
+                role: "sent"
+                title: "Sent"
+                width: 24
+            }
+            TableViewColumn {
                 role: "invoice_number"
                 title: "Invoice"
                 width: 100

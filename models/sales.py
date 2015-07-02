@@ -14,6 +14,7 @@ class RegisterSalesModel(QAbstractListModel):
     SaleTimeRole = Qt.UserRole + 5
     TotalPaymentRole = Qt.UserRole + 6
     RegisterIDRole = Qt.UserRole + 7
+    SentRole = Qt.UserRole + 8
 
     _roles = {
         InvoiceNumberRole: "invoice_number",
@@ -23,11 +24,13 @@ class RegisterSalesModel(QAbstractListModel):
         SaleTimeRole: "time",
         TotalPaymentRole: "total_payment",
         RegisterIDRole: "register",
+        SentRole: "sent",
     }
 
-    def __init__(self, vend, parent=None):
+    def __init__(self, vend, cache, parent=None):
         super(RegisterSalesModel, self).__init__(parent)
         self._vend = vend
+        self._cache = cache
         self.__data = []
         self._data = []
 
@@ -108,6 +111,11 @@ class RegisterSalesModel(QAbstractListModel):
             return "%.2f" % o['totals']['total_payment']
         elif role == self.RegisterIDRole:
             return o['register_id']
+        elif role == self.SentRole:
+            sale = self._cache.get_register_sale(o['id'])
+            if sale is None:
+                return ""
+            return bool(sale.sent) and "*" or ""
 
         return QVariant()
 

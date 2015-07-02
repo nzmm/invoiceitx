@@ -34,7 +34,7 @@ class Vend(QObject):
         self._outlets = OutletsModel()
         self._register = Register(self._cache)
         self._registers = RegistersModel()
-        self._sales = RegisterSalesModel(self)
+        self._sales = RegisterSalesModel(self, self._cache)
         self._saleDetails = SaleDetails(self._register, self._sales, self._cache)
         self.__outlets = []
         self.__registers = []
