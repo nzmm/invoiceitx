@@ -54,6 +54,7 @@ class RegisterSalesModel(QAbstractListModel):
             self.__data = []
         self._data = []
         self.endResetModel()
+        self.listChanged.emit()
         return
 
     def rebuildList(self):
