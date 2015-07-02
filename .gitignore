@@ -103,3 +103,5 @@ $RECYCLE.BIN/
 # invoiceit specific
 cache/
 .idea/
+pdf/rendered/receipt.html
+pdf/rendered/receipt.pdf
