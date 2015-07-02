@@ -161,7 +161,7 @@ Item {
 
             TableViewColumn {
                 role: "sent"
-                title: "Sent"
+                title: ""
                 width: 24
             }
             TableViewColumn {
