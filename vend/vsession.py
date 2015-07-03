@@ -4,8 +4,6 @@ import vend
 
 class VendAuthSession(vend.Vendor):
 
-    CACHE_DISCARD_TIMEDELTA = 300   # seconds
-
     def __init__(self, domain, user, password):
         vend.Vendor.__init__(self, domain, user, password)
         self.session = requests.Session()
