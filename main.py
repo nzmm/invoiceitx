@@ -12,17 +12,11 @@ from qtypes.argv import ArgParser
 from qtypes.vend import Vend
 
 
-def aboutToQuit(*args):
-    print(args)
-    return
-
-
 if __name__ == '__main__':
     # Reminder to self, see link for why we avoid a 'main' function here
     # http://pyqt.sourceforge.net/Docs/PyQt5/pyqt4_differences.html#object-destruction-on-exit
 
     app = QApplication(sys.argv)
-    app.aboutToQuit.connect(aboutToQuit)
     print(sys.version)
     print("InvoiceIt")
     root = os.path.dirname(__file__)

@@ -163,8 +163,15 @@ class RegisterSalesModel(QAbstractListModel):
         if not amount:
             amount = ""
 
-        self._amountFilter = amount
-
+        self._amountFilter = amounts
         self.clear(deep=False)
         self.rebuildList()
         return
+
+    @pyqtProperty(int, notify=listChanged)
+    def allAvailable(self):
+        return len(self.__data)
+
+    @pyqtProperty(int, notify=listChanged)
+    def allVisible(self):
+        return len(self._data)

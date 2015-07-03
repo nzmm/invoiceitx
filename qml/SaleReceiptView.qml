@@ -201,6 +201,7 @@ Item {
                         anchors.left: parent.left
                         anchors.right: parent.right
                         anchors.verticalCenter: parent.verticalCenter
+                        anchors.leftMargin: 4
                         elide: Text.ElideMiddle
                         color: styleData.textColor
 

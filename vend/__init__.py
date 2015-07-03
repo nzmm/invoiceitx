@@ -33,7 +33,10 @@ class SaleStatus:
 class Vendor(object):
 
     def __init__(self, domain, usr, pwd):
-        self.set_credentials(domain, usr, pwd)
+        self.domain_name = domain
+        self.domain = 'https://%s.vendhq.com/api/' % domain
+        self.user = usr
+        self.password = pwd
         return
 
     def set_credentials(self, domain, usr, pwd):
@@ -222,7 +225,6 @@ class Products(object):
         # get first page and pagination
         prods = Products.get(vendor, **options)
         if prods.has('pagination'):
-            n_results = prods.pagination.results
             n_pages = prods.pagination.pages
             pages = range(1, n_pages+1)
 
@@ -249,7 +251,7 @@ class Products(object):
                         p.count = count
                         in_stock.append(p)
             if not page.cached:
-                # so we avoid hitting vend's api rate-limits
+                # so we avoid hitting vends' api rate-limits
                 time.sleep(0.1)
         return sorted(in_stock, key=attrgetter('name'))
 
@@ -273,7 +275,6 @@ class Products(object):
         # get first page and pagination
         prods = Products.get(vendor, **options)
         if prods.has('pagination'):
-            # n_results = prods.pagination.results
             n_pages = prods.pagination.pages
             pages = range(1, n_pages+1)
 

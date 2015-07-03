@@ -142,6 +142,14 @@ Item {
                 }
             }
         }
+        Label {
+            anchors.verticalCenter: filterCol.verticalCenter
+            anchors.right: parent.right
+            anchors.margins: 15
+            anchors.verticalCenterOffset: height
+            color: "#878787"
+            text: "%1/%2".arg(vendor.sales.allVisible).arg(vendor.sales.allAvailable)
+        }
         TableView {
             id: salesList
 
