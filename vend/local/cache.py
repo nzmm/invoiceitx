@@ -55,7 +55,6 @@ class LocalCache(object):
     def __init__(self):
         # db location attrs
         self.db_path = ""
-
         # engine attrs
         self.db = None
         self.metadata = None
@@ -66,13 +65,10 @@ class LocalCache(object):
         dir_path = os.path.join(os.getcwd(), 'cache')
         if not os.path.exists(dir_path):
             os.makedirs(dir_path)
-
         self.db_path = os.path.join(dir_path, '%s.db' % domain)
-        initially_existed = os.path.exists(self.db_path)
         self.db = create_engine('sqlite:///cache/%s.db' % domain)
         self.db.echo = False
         self.metadata = MetaData(self.db)
-        print(self.db_path, initially_existed)
         return
 
     def init(self, vendor):
