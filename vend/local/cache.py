@@ -63,7 +63,11 @@ class LocalCache(object):
         return
 
     def set_domain(self, domain):
-        self.db_path = os.path.join(os.getcwd(), 'cache', '%s.db' % domain)
+        dir_path = os.path.join(os.getcwd(), 'cache')
+        if not os.path.exists(dir_path):
+            os.makedirs(dir_path)
+
+        self.db_path = os.path.join(dir_path, '%s.db' % domain)
         initially_existed = os.path.exists(self.db_path)
         self.db = create_engine('sqlite:///cache/%s.db' % domain)
         self.db.echo = False
