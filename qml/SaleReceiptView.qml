@@ -61,7 +61,6 @@ Item {
                 function reveal(action) {
                     text = action;
                     opacity = 1.0;
-                    console.log(action, opacity);
                     timeout.restart();
                 }
 
