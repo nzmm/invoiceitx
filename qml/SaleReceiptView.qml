@@ -7,8 +7,8 @@ import "m"
 Item {
     property variant receipt: vendor.saleReceipt
 
-    function save() {
-        savedHint.visible = false;
+    function save(action) {
+        actionHint.opacity = 0;
         receipt.saveCustomerDetails(
             customerName.text,
             customerEmail.text,
@@ -22,7 +22,7 @@ Item {
         for (i=0; i<l; i++) {
             receipt.saveLineNote(i, model.lineNote(i));
         }
-        savedHint.visible = true;
+        actionHint.reveal(action);
     }
 
     Rectangle {
@@ -56,26 +56,33 @@ Item {
             anchors.margins: 15
 
             Label {
-                id: savedHint
+                id: actionHint
 
-                anchors.verticalCenter: parent.verticalCenter
-                text: "Saved :)"
-                color: "#F2F1F0"
-                visible: false
-
-                onVisibleChanged: {
-                    if (visible) {
-                        timeout.restart()
-                    }
+                function reveal(action) {
+                    text = action;
+                    opacity = 1.0;
+                    console.log(action, opacity);
+                    timeout.restart();
                 }
 
+                anchors.verticalCenter: parent.verticalCenter
+                color: "#F2F1F0"
+                opacity: 0
+                text: ""
+
+                NumberAnimation on opacity {
+                    id: fadeOut
+                    to: 0
+                    duration: 2000
+                    running: false;
+                }
                 Timer {
                     id: timeout
                     interval: 10000;
                     running: false;
                     repeat: false;
                     onTriggered: {
-                        parent.visible = false
+                        fadeOut.running = true;
                     }
                 }
             }
@@ -85,7 +92,7 @@ Item {
 
                 onClicked: {
                     if (!receipt.saving) {
-                        save()
+                        save("Receipt saved")
                     }
                 }
             }
@@ -95,17 +102,23 @@ Item {
 
                 onClicked: {
                     if (!receipt.saving) {
-                        save();
+                        save("PDF generated");
                         receipt.generatePDF();
                     }
                 }
             }
             MButton {
+                property bool validated: (
+                    !receipt.saving &&
+                    customerEmail.text !== "" &&
+                    vendor.register.emailAppearsConfigured
+                )
+
                 text: "Email PDF"
-                opacity: receipt.saving || customerEmail.text !== "" ? 1 : 0.5
+                opacity: validated ? 1 : 0.5
                 onClicked: {
-                    if (!receipt.saving) {
-                        save();
+                    if (validated) {
+                        save("Email sent");
                         receipt.emailPDF();
                     }
                 }

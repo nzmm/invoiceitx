@@ -7,15 +7,23 @@ from os.path import join, dirname
 
 
 DEFAULT_TEMPLATE = "xeroesque.html"
-RENDERED_TEMPLATE = join("pdf", "rendered", "receipt.html")
-RENDERED_PDF = join("pdf", "rendered", "receipt.pdf")
+RENDERED_DIR = join("pdf", "rendered")
+RENDERED_TEMPLATE = join(RENDERED_DIR, "receipt.html")
+RENDERED_PDF = join(RENDERED_DIR, "receipt.pdf")
 
 from jinja2 import Environment, FileSystemLoader
 JENV = Environment(loader=FileSystemLoader(join(dirname(__file__), 'templates')))
 
 
+# ensure rendered folder exists
+if not os.path.exists(RENDERED_DIR):
+    os.makedirs(RENDERED_DIR)
+
+
 # custom filters
 def nl2br(s):
+    if s is None:
+        return s
     return s.replace('\n', '<br>\n')
 
 

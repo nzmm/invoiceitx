@@ -53,7 +53,6 @@ class Register(QQuickItem):
         cfg.landline_ph = landline
         cfg.mobile_ph = mobile
         cfg.tax_id = taxID
-        #~ cfg.bank_account = bankAccount
         cfg.payment_instructions = paymentInstructions
         cfg.footer_message = footerMessage
 
@@ -175,6 +174,15 @@ class Register(QQuickItem):
         return self._cfg.footer_message
 
     @pyqtProperty(bool, notify=registerChanged)
-    def vendorEmailAppearsConfigured(self):
-        # TODO
-        return True
+    def emailAppearsConfigured(self):
+        if self._cfg is None:
+            return False
+
+        cfg = self._cfg
+        isConfigured = (
+            cfg.email and
+            cfg.email_server and
+            cfg.email_user and
+            cfg.email_password and
+            cfg.email_port)
+        return bool(isConfigured)
