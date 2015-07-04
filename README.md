@@ -1,7 +1,7 @@
 InvoiceIt
 =========
 
-Send fancy receipts for vend sales.  Tested to work on both Windows and Ubuntu Linux.  You need a Vend account for this software to be of any use.
+Create and send snazzy invoices for Vend sales.  Tested to work on both Windows and Ubuntu Linux.  You need a Vend account for this software to be of any use.
 
 
 Installation
