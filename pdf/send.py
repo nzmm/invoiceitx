@@ -1,4 +1,3 @@
-import smtplib
 
 from email.mime.base import MIMEBase
 from email.mime.text import MIMEText
@@ -6,11 +5,12 @@ from email.mime.multipart import MIMEMultipart
 from email import encoders
 
 COMMASPACE = ', '
+TIMEOUT_SECONDS = 60
 
 
-def _send(smtp, register, from_email, to_email_list, msg):
+def _send(smtp, register, from_email, to_email_list, msg, timeout=TIMEOUT_SECONDS):
     try:
-        conn = smtp(register.emailServer)
+        conn = smtp(register.emailServer, timeout=timeout)
         conn.set_debuglevel(False)
         conn.login(register.emailUser, register.emailPassword)
         try:

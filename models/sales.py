@@ -150,7 +150,7 @@ class RegisterSalesModel(QAbstractListModel):
     @pyqtSlot(str)
     def setInvoiceFilter(self, invoiceNo):
         if not invoiceNo:
-            invoiceNumber = ""
+            invoiceNo = ""
 
         self._invoiceFilter = invoiceNo.strip().lower()
 
@@ -163,7 +163,7 @@ class RegisterSalesModel(QAbstractListModel):
         if not amount:
             amount = ""
 
-        self._amountFilter = amounts
+        self._amountFilter = amount
         self.clear(deep=False)
         self.rebuildList()
         return
