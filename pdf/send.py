@@ -39,7 +39,7 @@ def _send_ssl_secured(*args):
     #~ return _send(SMTP_SSL, *args)
 
 
-def email_pdfs(register, subject, from_email, to_email_list, text_message='', attachments=[]):
+def email_pdf_files(register, subject, from_email, to_email_list, text_message='', attachments=[]):
     # TODO: thread
     # Create the container (outer) email message.
     msg = MIMEMultipart()

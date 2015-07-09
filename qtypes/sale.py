@@ -10,7 +10,7 @@ from models.sale_products import SaleProductsModel
 from models.sale_payments import SalePaymentsModel
 
 from pdf.renderer import render_pdf, DEFAULT_TEMPLATE
-from pdf.send import email_pdfs
+from pdf.send import email_pdf_files
 
 
 class SaleDetails(QQuickItem):
@@ -148,7 +148,7 @@ class SaleDetails(QQuickItem):
             },
         ]
 
-        email_pdfs(
+        email_pdf_files(
             r,
             "Your receipt from %s" % r.tradingName,
             r.email,
